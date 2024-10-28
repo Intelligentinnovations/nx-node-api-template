@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import { UserRepo } from '../repo';
 import { SecretsService } from '../secrets/secrets.service';
 import {generateRandomNumber} from "../utils/helper/general";
-import {IServiceHelper, User} from "../utils/types";
+import {IServiceHelper, User, UserData} from "../utils/types";
 import {
   EmailPayload,
   LoginPayload,
@@ -37,8 +37,8 @@ export class AuthService {
       const userData = await this.userRepo.create({
           ...userPayload,
           password: hashedPassword
-        });
-      const token = jwt.sign(userPayload, this.secrets.get('SECRET_KEY'), {
+        }) as UserData;
+      const token = jwt.sign(userData, this.secrets.get('SECRET_KEY'), {
         expiresIn: 30000
       });
 

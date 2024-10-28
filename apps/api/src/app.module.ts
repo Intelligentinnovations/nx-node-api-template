@@ -9,6 +9,7 @@ import {LibrariesModule} from "./libraries/libraries.module";
 import {SecretsModule} from "./secrets/secrets.module";
 import {SecretsService} from "./secrets/secrets.service";
 import {RepoModule} from "./repo/repo.module";
+import {UserModule} from "./user/user.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import {RepoModule} from "./repo/repo.module";
       isGlobal: true,
     }),
     AuthModule,
+    UserModule
   ],
   providers: [
     {

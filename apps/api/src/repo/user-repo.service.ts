@@ -1,9 +1,10 @@
 import {KyselyService} from "@backend-template/database";
 import { Injectable } from '@nestjs/common';
 
-import { SecretsService } from '../secrets/secrets.service';
-import {DB} from "../utils/types";
 import {SignupPayload} from "../auth/dto/auth";
+import { SecretsService } from '../secrets/secrets.service';
+import {CompleteProfilePayload} from "../user/dto/user";
+import {DB} from "../utils/types";
 
 @Injectable()
 export class UserRepo {
@@ -33,6 +34,40 @@ export class UserRepo {
     return this.client.insertInto('User')
       .values(param)
       .returning(['id', 'name', 'email', 'isVerified'])
+      .executeTakeFirst()
+  }
+
+  async completeProfile(userId: string, payload: CompleteProfilePayload) {
+    return this.client.updateTable('User')
+      .set(payload)
+      .where('id', '=', userId)
+      .returning([
+        'id',
+        'email',
+        'name',
+        'bvn',
+        'isVerified',
+        'companyName',
+        'workDescription',
+        'workTitle',
+        'typeOfWork'
+      ])
+      .executeTakeFirst()
+  }
+
+  async getProfile(userId: string) {
+  return this.client.selectFrom('User')
+      .select(['id',
+        'email',
+        'name',
+        'bvn',
+        'isVerified',
+        'companyName',
+        'workDescription',
+        'workTitle',
+        'typeOfWork',
+        ])
+      .where('id', '=', userId)
       .executeTakeFirst()
   }
 }

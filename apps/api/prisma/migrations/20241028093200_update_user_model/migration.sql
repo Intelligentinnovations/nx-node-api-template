@@ -1,0 +1,18 @@
+/*
+  Warnings:
+
+  - The primary key for the `User` table will be changed. If it partially fails, the table could be left without primary key constraint.
+
+*/
+-- AlterTable
+ALTER TABLE "User" DROP CONSTRAINT "User_pkey",
+ADD COLUMN     "bvn" TEXT,
+ADD COLUMN     "companyName" TEXT,
+ADD COLUMN     "typeOfWork" TEXT,
+ADD COLUMN     "workDescription" TEXT,
+ADD COLUMN     "workTitle" TEXT,
+ALTER COLUMN "id" SET DEFAULT gen_random_uuid(),
+ALTER COLUMN "id" DROP DEFAULT,
+ALTER COLUMN "id" SET DATA TYPE TEXT,
+ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
+DROP SEQUENCE "User_id_seq";
