@@ -38,6 +38,9 @@ export class CustomRes<T = unknown> extends HttpException {
   static badRequest<T>(message: string): CustomRes<T> {
     return new CustomRes<T>(HttpStatus.BAD_REQUEST, message);
   }
+  static conflict<T>(message: string): CustomRes<T> {
+    return new CustomRes<T>(HttpStatus.CONFLICT, message);
+  }
 
   static unauthorized<T>(message = unauthorizedError): CustomRes<T> {
     return new CustomRes<T>(HttpStatus.UNAUTHORIZED, message);
@@ -45,6 +48,10 @@ export class CustomRes<T = unknown> extends HttpException {
 
   static forbidden<T>(message = noPermissionError): CustomRes<T> {
     return new CustomRes<T>(HttpStatus.FORBIDDEN, message);
+  }
+
+  static created<T>(message = successful, data?: T): CustomRes<T> {
+    return new CustomRes<T>(HttpStatus.CREATED, message, true, data);
   }
 
   static serverError<T>(message = unknownServerError): CustomRes<T> {

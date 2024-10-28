@@ -7,6 +7,7 @@ import { v4 as uuidV4 } from 'uuid';
 @Injectable()
 export class DynamoService extends DynamoDBDocument {
   constructor(region?: string) {
+    ///@ts-ignore
     super(DynamoDBDocument.from(new DynamoDBClient({ region })));
   }
 
